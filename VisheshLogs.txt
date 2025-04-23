@@ -1,0 +1,70 @@
+Final Goal : 
+    Delivering results by third week of May 2025. 
+    Mediocrity is weakness. 
+    Comfort is decay and death.
+    Coming second means coming first amongst all the ones who lost. 
+    
+Problem Statement : Predicting the disease on the basis of symptoms and explaining why did AI come to that decision in the first place. Basically
+                    destroying the black box nature of AI. 
+
+Partners : ChatGPT(https://chatgpt.com/c/67f16a82-2044-8008-93fe-23140f740d0a), Tanishta, Saketh
+
+
+Tracking Progress : 
+
+07.04.2025 : 19:43:05
+1. Devised workflow
+    Phase 1 : Finding and cleansing Dataset
+    Phase 2 : Applying DL Models to find relation between disease and their symptoms
+    Phase 3 : Applying explainability to find the reason of conclusion
+    Phase 4 : Applying generative AI to convert graph output(assumption) of step 1.3 into a human readable report
+
+2. Resources : Kaggle and mendley for dataset. More details on Notion.
+
+3. Current progress : 
+    3.1) Activate Phase 1
+    3.2) Datasets found, cleansing in progress 
+    3.3) Assigned finding of DLM to the team
+    3.4) Beginning use of pandas for data cleansing
+    3.5) Expected results by 07.04.2025 23:59:59
+    3.6) This is going to be a hell. And stopping in hell is idiotic. 
+
+4. Unthought challenge : 
+    It isn't necessary that a disease causes all the symptoms as mentioned in our dataset. Also, it is quite possible that there are weights to 
+    symptoms. Like the extent of a particular symptom(rash for example) might determine the disease a person is suffering from. Also, the 
+    timeline of disease is also something to think about (quite possible that 'fever followed by rash' is a different disease from 'rash 
+    followed by fever')
+
+5. Phase 1 Complete on 07.04.2025 22:55:12: 
+    DiseaseAndSymptoms.csv -->  Dataset1.xlsx
+    symbipredict_2022.csv  -->  Dataset2.xlsx
+    OriginalDS/Final_Augmented_dataset_Diseases_and_Symptoms.csv  --> Dataset3.xlsx
+
+6. Phase 1 completed on 19.04.2024 16:51:32:
+    All datasets integrated into one. Ready for applying model. 
+
+
+
+
+------------ Phase 1 Ends ------------
+
+
+
+
+20.04.2025 : 02:18:13
+1. Phase 2 activated. 
+
+2. Proposed workflow : 
+    Apply a LightBGM model to find disease using symptoms. At this stage, the input will be fed exactly same as input labels of the dataset. 
+    Delegated to Saketh.
+    Developing a NLP model that can see and match input symptom given as a list separated by commas and match it to the labels of the input 
+    dataset. 
+
+3. Current state : 
+    3.1) Phase 2 activated. 
+    3.2) Pre trained semantic model all-MiniLM-L6-v2 is used so that the semantic of the user input can be equated with the semantic of all 
+    the symptoms in the database. 
+    3.3) Basic model shaped right now. Improvisations to be carried out by Tanishta. Checking of the model to be handled by Saketh. 
+    3.4) Waiting for the LightBGM. Once both are good to go, they will be integrated. Then proceeding to the third phase, the final boss, 
+    applying explainability. 
+    3.5) This is going to be a hell. And stopping in hell is idiotic. 
