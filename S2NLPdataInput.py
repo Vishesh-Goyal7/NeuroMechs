@@ -1,8 +1,8 @@
 import pandas as pd
 from sentence_transformers import SentenceTransformer, util
 
-file_path = '/Users/visheshgoyal/NeuroMechs/CleansedDataset/Dataset3.xlsx'
-df = pd.read_excel(file_path)
+file_path = '/Users/visheshgoyal/NeuroMechs/CleansedDataset/Dataset3.csv'
+df = pd.read_csv(file_path)
 
 model = SentenceTransformer('all-MiniLM-L6-v2')  
 
