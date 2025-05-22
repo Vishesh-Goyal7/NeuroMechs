@@ -2,3 +2,4 @@
 *.csv
 /OriginalDS/
 /CleansedDataset/
+/__pycache__/
