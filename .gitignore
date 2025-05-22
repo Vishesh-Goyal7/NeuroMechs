@@ -3,3 +3,5 @@
 /OriginalDS/
 /CleansedDataset/
 /__pycache__/
+*.json
+*.pkl
