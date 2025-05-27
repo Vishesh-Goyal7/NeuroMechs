@@ -4,4 +4,4 @@
 /CleansedDataset/
 /__pycache__/
 *.json
-*.pkl
+*.pkl.DS_Store
