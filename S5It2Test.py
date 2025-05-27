@@ -57,7 +57,7 @@ if __name__ == "__main__":
         dataset_path="/Users/visheshgoyal/NeuroMechs/CleansedDataset/filtered_dataset_min15.csv",
         top_n=5,
         sample_size=1000,
-        max_per_class=1,
-        drop_probability=0.2,
+        max_per_class=6,
+        drop_probability=0.3,
         false_positive_probability=0
     )
