@@ -91,12 +91,10 @@ class XGBoostDiseasePredictor:
 if __name__ == "__main__":
     # model = XGBoostDiseasePredictor()
 
-    # # Train and save
     # X_train, X_test, y_train, y_test, sw_train, sw_test = model.load_and_prepare_data("/Users/visheshgoyal/NeuroMechs/CleansedDataset/filtered_dataset_min15.csv")
     # model.train(X_train, y_train, sw_train)
     # model.save("disease_model")  # Saves: disease_model_model.json + disease_model_meta.pkl
 
-    # # Predict from real input
     # input_symptoms = model.get_symptom_template()
     # input_symptoms['fever'] = 0.8
     # input_symptoms['cough'] = 0.9
@@ -104,10 +102,9 @@ if __name__ == "__main__":
     # preds = model.predict_top_n(input_vector)
     # print("Top predictions:", preds)
 
-    # Later reuse
     new_model = XGBoostDiseasePredictor("disease_model")
     input_symptoms = new_model.get_symptom_template()
-    input_symptoms['fever'] = 0.8
-    input_symptoms['cough'] = 0.9
+    input_symptoms['fever'] = 1
+    input_symptoms['cough'] = 1
     input_vector = list(input_symptoms.values())
     print("From loaded model:", new_model.predict_top_n(input_vector))

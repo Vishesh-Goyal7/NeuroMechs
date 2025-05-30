@@ -13,12 +13,10 @@ def predict_and_explain_top_n(json_path, dataset_path="your_dataset.csv", model_
         shutil.rmtree(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
-    # Load model and dataset
     predictor = XGBoostDiseasePredictor(model_path=model_path)
     df = pd.read_csv(dataset_path)
     disease_names = sorted(df.iloc[:, 0].unique().tolist())
 
-    # Load input symptoms JSON
     with open(json_path, 'r') as f:
         data = json.load(f)
 
@@ -31,7 +29,6 @@ def predict_and_explain_top_n(json_path, dataset_path="your_dataset.csv", model_
     input_array = np.array(list(input_vector.values())).reshape(1, -1)
     predictions = predictor.predict_top_n(input_array[0], top_n=top_n)
 
-    # SHAP explainer
     explainer = shap.TreeExplainer(predictor.model)
     shap_values = explainer.shap_values(input_array)
 
@@ -47,7 +44,7 @@ def predict_and_explain_top_n(json_path, dataset_path="your_dataset.csv", model_
             feature_names=predictor.symptom_names,
             features=input_array[0],
             max_display=10,
-            show=False  # prevent immediate display
+            show=False
         )
 
         plot_path = os.path.join(output_dir, f"{disease}_shap.png")

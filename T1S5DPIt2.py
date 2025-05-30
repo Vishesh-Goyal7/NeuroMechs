@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import random
 from collections import defaultdict
-from S5DiseasePredictIteration2 import XGBoostDiseasePredictor  # Update with your import path
+from S5DiseasePredictIteration2 import XGBoostDiseasePredictor
 
 def evaluate_top_n_accuracy(model_path_prefix, dataset_path, top_n=5, sample_size=100, max_per_class=3, drop_probability=0.2, false_positive_probability=0.1):
     predictor = XGBoostDiseasePredictor(model_path=model_path_prefix)
@@ -30,7 +30,6 @@ def evaluate_top_n_accuracy(model_path_prefix, dataset_path, top_n=5, sample_siz
         true_disease = diseases[idx]
         original_vector = symptom_data.iloc[idx].values.astype(float)
 
-        # Simulate noise: dropout and false positives
         noisy_vector = original_vector.copy()
         for i in range(len(noisy_vector)):
             if noisy_vector[i] == 1 and random.random() < drop_probability:
