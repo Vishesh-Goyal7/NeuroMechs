@@ -4,4 +4,7 @@
 /CleansedDataset/
 /__pycache__/
 *.json
-*.pkl.DS_Store
+*.pkl
+.DS_Store
+/temp_xai_testing/
+/shap_outputs/
