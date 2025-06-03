@@ -1,3 +1,0 @@
-pandas
-sentence_transformers
-collections
