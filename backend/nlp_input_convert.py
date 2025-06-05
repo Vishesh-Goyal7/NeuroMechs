@@ -3,7 +3,7 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer, util
 
 # Load input JSON
-with open("temp.json", 'r') as f:
+with open("input.json", 'r') as f:
     data = json.load(f)
 
 # Extract symptom keys

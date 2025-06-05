@@ -7,8 +7,8 @@ root = os.path.dirname(os.path.abspath(__file__))
 
 # Run prediction + explanation
 preds, graph_paths, exp_path = predict_and_explain_top_n(
-    json_path=os.path.join(root, "temp.json"),
-    dataset_path=os.path.join(root, "CleansedDataset", "filtered_dataset_min15.csv"),
+    json_path=os.path.join(root, "medibot_result.json"),
+    dataset_path=os.path.join(root, "filtered_dataset_min15.csv"),
     model_path=os.path.join(root, "disease_model"),          
     top_n=10,
     output_dir=os.path.join(root, "shap_outputs")

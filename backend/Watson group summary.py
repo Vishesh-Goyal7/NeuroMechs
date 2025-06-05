@@ -27,7 +27,7 @@ watson = ModelInference(
 )
 
 # Load the SHAP explanation input file
-with open("/content/drive/MyDrive/shap_explanations.json", "r") as f:
+with open("shap_outputs/shap_explanations.json", "r") as f:
     shap_data = json.load(f)
 
 def pretty(feature_name: str) -> str:
@@ -124,7 +124,7 @@ for disease, contents in shap_data.items():
     print(f"Generated summary for {disease}: {cleansed_text[:60]}...")
 
 # Save the cleaned explanations to a JSON file
-with open("shap_explanation_summary.json", "w") as out_f:
+with open("shap_outputs/shap_explanation_summary.json", "w") as out_f:
     json.dump(final_explanations, out_f, indent=2)
 
 print("\nAll explanations have been saved to 'shap_explanation_summary.json'.")
