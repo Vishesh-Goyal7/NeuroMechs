@@ -1,0 +1,9 @@
+{
+  "date": "2025-06-06",
+  "input_symptoms": {
+    "redness in the eye": 0.8,
+    "itchy eyes": 0.8,
+    "imflammation in eyelids": 0.4,
+    "fever": 0.1
+  }
+}
