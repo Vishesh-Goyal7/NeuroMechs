@@ -1,0 +1,39 @@
+{
+    "date": "2025-06-12",
+    "input_symptoms": [
+        {
+            "symptom": "cough",
+            "severity": 0.7
+        },
+        {
+            "symptom": "headache",
+            "severity": 0.8
+        },
+        {
+            "symptom": "weakness",
+            "severity": 0.4
+        }
+    ],
+    "possible_conditions": [
+        {
+            "disease": "blepharospasm",
+            "match_score": 0.8
+        },
+        {
+            "disease": "ependymoma",
+            "match_score": 0.8
+        },
+        {
+            "disease": "high blood pressure",
+            "match_score": 0.8
+        },
+        {
+            "disease": "intracranial abscess",
+            "match_score": 0.8
+        },
+        {
+            "disease": "open wound of the head",
+            "match_score": 0.8
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+.password-rules {
+    background: #f7fbfd;
+    border: 1.5px solid #b6e0fe;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    color: #1082c7;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 1.5px 8px rgba(16,130,199,0.04);
+    text-align: left;
+  }
+  
+  .password-error {
+    color: #e74c3c;
+    font-size: 1.08rem;
+    margin-bottom: 8px;
+    margin-top: -18px;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .rule-met {
+    color: #1bbf6b;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .rule-unmet {
+    color: #e74c3c;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  
+  .password-error {
+    color: #e74c3c;
+    font-size: 1.08rem;
+    margin-bottom: 8px;
+    margin-top: -18px;
+    text-align: left;
+    width: 100%;
+  }

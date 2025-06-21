@@ -1,0 +1,106 @@
+/* ContactPage.css */
+
+.contact-main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 64px 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 8px 48px rgba(16,130,199,0.13), 0 1.5px 8px rgba(0,0,0,0.04);
+  padding: 48px 36px 36px 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #1082c7;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.contact-desc {
+  color: #6c7a89;
+  font-size: 1.13rem;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.contact-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.contact-input, .contact-textarea {
+  width: 100%;
+  padding: 18px 14px;
+  border: 2.5px solid #1082c7;
+  border-radius: 14px;
+  font-size: 1.13rem;
+  background: #f7fbfd;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1.5px 8px rgba(16,130,199,0.04);
+}
+
+.contact-input:focus, .contact-textarea:focus {
+  border: 2.5px solid #0e5e8e;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+}
+
+.contact-btn {
+  width: 100%;
+  padding: 18px 0;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.contact-btn:hover {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}
+
+.contact-success {
+  text-align: center;
+  color: #1082c7;
+  padding: 32px 0 16px 0;
+}
+
+.contact-success h2 {
+  font-size: 1.7rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.contact-success p {
+  font-size: 1.13rem;
+}
+
+@media (max-width: 600px) {
+  .contact-card {
+    padding: 32px 10px 24px 10px;
+  }
+  .contact-main {
+    padding: 32px 0 16px 0;
+  }
+}

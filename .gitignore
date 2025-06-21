@@ -1,0 +1,17 @@
+/venv/
+*.csv
+/OriginalDS/
+/CleansedDataset/
+/__pycache__/
+.DS_Store
+/temp_xai_testing/
+/shap_outputs/
+temp_test
+S2NLPdataInput.py
+S5DiseasePredictIteration1.py
+disease_model_model.json
+myenv/
+venv/
+.env/
+*.pyc
+__pycache__/
