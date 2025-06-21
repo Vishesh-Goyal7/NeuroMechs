@@ -1,19 +1,21 @@
 import json
 import re
-import io
-import sys
 import datetime
 import torch
-import os
 import pandas as pd
 from sentence_transformers import SentenceTransformer, util
-import httpx
-
-from dotenv import load_dotenv
-load_dotenv()
+import os
 
 # Load dataset
-df = pd.read_csv("/Users/tanishta/Desktop/NeuroMechs-pipeline/backend/symptomMap.csv")
+# Use relative path for portability
+DF_PATH = os.path.join(os.path.dirname(__file__), "symptomMap.csv")
+try:
+    df = pd.read_csv(DF_PATH)
+    print(f"[DEBUG] Loaded CSV: {DF_PATH}, shape: {df.shape}")
+    print(f"[DEBUG] Columns: {df.columns.tolist()}")
+except Exception as e:
+    print(f"[ERROR] Failed to load CSV at {DF_PATH}: {e}")
+    raise
 symptom_cols = df.columns[1:]
 symptom_texts = [col.replace("_", " ").lower() for col in symptom_cols]
 
@@ -21,23 +23,14 @@ symptom_texts = [col.replace("_", " ").lower() for col in symptom_cols]
 st_model = SentenceTransformer('all-MiniLM-L6-v2')
 symptom_embeddings = st_model.encode(symptom_texts, convert_to_tensor=True)
 
-def query_ollama(prompt, model="mistral:instruct"):
-    OLLAMA_URL = "http://localhost:11434/api/generate"
-    response = httpx.post(
-        OLLAMA_URL,
-        json={
-            "model": model,
-            "prompt": f"User reports: {prompt}. What else might be related? Only use information about '{prompt}'. Keep the response concise.",
-            "stream": False,
-            "options": {"temperature": 0.7}
-        },
-        timeout=120
-    )
-    data = response.json()
-    if "response" not in data:
-        print("Ollama API error or unexpected response:", data)
-        raise ValueError("Ollama API did not return a 'response' key.")
-    return data["response"]
+# Build clean symptom mapping once
+SYMPTOM_LOOKUP = {
+    col.replace("_", " ").lower(): col
+    for col in symptom_cols
+}
+
+# Print available symptoms for debugging
+print(f"[DEBUG] Loaded symptoms: {list(SYMPTOM_LOOKUP.keys())}")
 
 def preprocess_symptoms(user_input):
     user_input = user_input.lower()
@@ -47,12 +40,6 @@ def preprocess_symptoms(user_input):
     user_input = user_input.replace(" and ", ";").replace(",", ";")
     phrases = [p.strip().strip(".") for p in user_input.split(";") if p.strip()]
     return phrases
-
-# Build clean symptom mapping once
-SYMPTOM_LOOKUP = {
-    col.replace("_", " ").lower(): col
-    for col in symptom_cols
-}
 
 def get_user_symptoms_fixed(user_input, top_k=5, similarity_threshold=0.4):
     cleaned_input = user_input.strip().lower()
@@ -73,20 +60,6 @@ def get_user_symptoms_fixed(user_input, top_k=5, similarity_threshold=0.4):
 
     return matched_symptoms[:top_k]
 
-def match_symptom_semantic(user_input):
-    inputs = [i.strip().lower() for i in user_input.split(',')]
-    matched_symptoms = {}
-    for input_symptom in inputs:
-        input_embedding = st_model.encode(input_symptom, convert_to_tensor=True).to(symptom_embeddings.device)
-        similarities = util.cos_sim(input_embedding, symptom_embeddings)
-        best_match_idx = similarities.argmax()
-        best_match_score = similarities[0, best_match_idx].item()
-        if best_match_score > 0.0:
-            matched_symptoms[input_symptom] = symptom_cols[int(best_match_idx)]
-        else:
-            matched_symptoms[input_symptom] = None
-    return matched_symptoms
-
 def rank_diseases(matched_symptoms, df, top_k=5):
     disease_scores = []
     disease_col = df.columns[0]
@@ -101,77 +74,71 @@ def rank_diseases(matched_symptoms, df, top_k=5):
     disease_scores.sort(key=lambda x: x[1], reverse=True)
     return disease_scores[:top_k]
 
-def chatbot_interaction():
-    user_symptoms = []
-    matched_symptom_scores = []
+def chatbot_backend(symptom_input):
+    try:
+        print(f"[DEBUG] Raw input: {symptom_input}")
+        user_symptoms = []
+        matched_symptom_scores = []
+        possible_symptoms = preprocess_symptoms(symptom_input)
+        print(f"[DEBUG] Preprocessed symptoms: {possible_symptoms}")
+        for raw_symptom in possible_symptoms:
+            matches = get_user_symptoms_fixed(raw_symptom, top_k=1)
+            print(f"[DEBUG] Matches for '{raw_symptom}': {matches}")
+            if matches:
+                matched_symptom, score = matches[0]
+                if any(s[0] == matched_symptom for s in matched_symptom_scores):
+                    continue
+                user_symptoms.append({"symptom": matched_symptom, "severity": 1})
+                matched_symptom_scores.append((matched_symptom, score))
+        print(f"[DEBUG] Matched symptoms for scoring: {matched_symptom_scores}")
+        disease_scores = rank_diseases(matched_symptom_scores, df)
+        print(f"[DEBUG] Disease scores: {disease_scores}")
+        return {
+            "symptoms": user_symptoms,
+            "diagnosis": [
+                {"disease": disease.replace('_', ' '), "score": round(score, 2)}
+                for disease, score in disease_scores
+            ]
+        }
+    except Exception as e:
+        print(f"[ERROR] Exception in chatbot_backend: {e}")
+        import traceback
+        traceback.print_exc()
+        return {"error": f"Error processing symptom: {str(e)}"}
 
+# If run as script, do CLI chatbot
+if __name__ == "__main__":
     print("🤖 MediBot: Hello! I'm MediBot, your personal symptom checker powered by AI.")
-    print("🤖 MediBot: You can enter multiple symptoms in one go (e.g., 'fever, headache') or one by one.")
-    print("           Type 'done' when you're finished.\n")
-
+    print("🤖 MediBot: You can enter multiple symptoms in one go (e.g., 'fever, headache') or one by one. Type 'done' when finished.\n")
+    all_symptoms = []
     while True:
         user_input = input("🧑 User: ").strip()
         if user_input.lower() == 'done':
             break
-
-        possible_symptoms = preprocess_symptoms(user_input)
-        for raw_symptom in possible_symptoms:
-            print("Debug: raw_symptom =", raw_symptom)
-            matches = get_user_symptoms_fixed(raw_symptom, top_k=5)
-            print("Debug: matches =", matches)
-            if matches:
-                matched_symptom, score = matches[0]
-                if any(s["symptom"] == matched_symptom for s in user_symptoms):
-                    continue
-                severity_input = input(f"🤖 MediBot: On a scale of 0.1 to 1, how severe is your '{matched_symptom}'? (Press Enter to skip): ").strip()
-                try:
-                    severity = float(severity_input)
-                    if not (0.1 <= severity <= 1):
-                        print("❗ Please enter a number between 0.1 and 1.")
-                        severity = 1
-                except ValueError:
-                    print("⚠️ No valid severity provided. Defaulting severity to 1.")
-                    severity = 1
-                user_symptoms.append({"symptom": matched_symptom, "severity": severity})
-                matched_symptom_scores.append((matched_symptom, score * severity))
-                print(f"🤖 MediBot: Got it. You're experiencing '{matched_symptom}'.")
-            else:
-                print(f"🤖 MediBot: Couldn't confidently match '{raw_symptom}'. Please rephrase or try another symptom.")
-
-    if not user_symptoms:
-        print("\n🤖 MediBot: I couldn't understand any symptoms. Please try again with more common descriptions.")
-        return
-
+        all_symptoms.append(user_input)
+    if not all_symptoms:
+        print("🤖 MediBot: I couldn't understand any symptoms. Please try again with more common descriptions.")
+        exit()
+    summary = chatbot_backend(", ".join(all_symptoms))
     print("\n🔍 MediBot: Analyzing your symptoms...")
     print("📌 Symptoms considered:")
-    for entry in user_symptoms:
-        print(f"   - {entry['symptom']} (severity: {entry['severity']})")
-
-    disease_scores = rank_diseases(matched_symptom_scores, df)
-
-    if disease_scores:
+    for entry in summary["symptoms"]:
+        print(f"   - {entry['symptom']}")
+    if summary["diagnosis"]:
         print("\n🩺 MediBot: Based on your symptoms, here are some possible conditions:\n")
-        for idx, (disease, score) in enumerate(disease_scores, 1):
-            print(f"   {idx}. {disease.replace('_', ' ')} (match score: {score:.2f})")
+        for idx, d in enumerate(summary["diagnosis"], 1):
+            print(f"   {idx}. {d['disease']} (match score: {d['score']})")
     else:
         print("\n🤖 MediBot: Couldn't match these symptoms to any known conditions. Please consult a medical professional.")
-
+    # Save results
     result_data = {
         "date": datetime.date.today().strftime('%Y-%m-%d'),
-        "input_symptoms": user_symptoms,
-        "possible_conditions": [
-            {"disease": disease.replace('_', ' '), "match_score": round(score, 1)}
-            for disease, score in disease_scores
-        ]
+        "input_symptoms": summary["symptoms"],
+        "possible_conditions": summary["diagnosis"]
     }
-
-    result_path = "/Users/tanishta/Desktop/NeuroMechs-pipeline/backend/medibot_result.json"
+    result_path = "backend/medibot_result.json"
     with open(result_path, "w") as f:
         json.dump(result_data, f, indent=4)
-
-    print("\n💾 Your results have been saved to 'medibot_results.json'.")
+    print("\n💾 Your results have been saved to 'medibot_result.json'.")
     print(f"\n📅 Date: {datetime.date.today().strftime('%B %d, %Y')}")
     print("✅ Thank you for using MediBot. Stay healthy!")
-
-if __name__ == "__main__":
-    chatbot_interaction()

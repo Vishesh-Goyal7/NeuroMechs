@@ -1,39 +1,35 @@
 {
-    "date": "2025-06-13",
+    "date": "2025-06-21",
     "input_symptoms": [
         {
             "symptom": "fever",
-            "severity": 0.7
+            "severity": 1
         },
         {
             "symptom": "cough",
-            "severity": 0.8
-        },
-        {
-            "symptom": "sore_throat",
             "severity": 1
         }
     ],
     "possible_conditions": [
         {
-            "disease": "dengue fever",
-            "match_score": 1.0
-        },
-        {
-            "disease": "zenker diverticulum",
-            "match_score": 1.0
+            "disease": "typhoid fever",
+            "score": 1.0
         },
         {
             "disease": "friedrich ataxia",
-            "match_score": 0.8
+            "score": 0.53
         },
         {
             "disease": "g6pd enzyme deficiency",
-            "match_score": 0.8
+            "score": 0.53
         },
         {
             "disease": "histoplasmosis",
-            "match_score": 0.8
+            "score": 0.53
+        },
+        {
+            "disease": "hyperhidrosis",
+            "score": 0.53
         }
     ]
 }

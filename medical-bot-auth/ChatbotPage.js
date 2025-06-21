@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./ChatbotPage.css";
 
+const ACKS = [
+  "Got it.",
+  "Noted!",
+  "Symptom received.",
+  "Understood."
+];
+
 function ChatbotPage() {
   const [chat, setChat] = useState([
     { sender: "bot", text: "Hello! I'm MediBot, your personal symptom checker powered by AI." },
@@ -15,7 +22,7 @@ function ChatbotPage() {
   const handleSend = async () => {
     const trimmed = input.trim();
     if (!trimmed) return;
-    
+
     setChat([...chat, { sender: "user", text: trimmed }]);
     setInput("");
 
@@ -27,12 +34,11 @@ function ChatbotPage() {
 
     // Send to backend to match symptoms
     try {
-      const response = await axios.post("http://localhost:6969/chatbot", { message: trimmed });
-      const reply = response.data.reply && response.data.reply.diagnosis && response.data.reply.diagnosis.length > 0
-        ? response.data.reply.diagnosis.map(d => `${d.disease}: ${d.score.toFixed(2)}`).join("\n")
-        : "Got it.";
+      await axios.post("http://localhost:6969/process", { message: trimmed });
+      // Random friendly ack
+      const ack = ACKS[Math.floor(Math.random() * ACKS.length)];
       setSymptomHistory([...symptomHistory, trimmed]);
-      setChat(prev => [...prev, { sender: "bot", text: reply }]);
+      setChat(prev => [...prev, { sender: "bot", text: ack }]);
     } catch (err) {
       setChat(prev => [...prev, { sender: "bot", text: "⚠️ Error processing symptom." }]);
     }
@@ -41,11 +47,20 @@ function ChatbotPage() {
   const fetchResults = async () => {
     try {
       const combinedInput = symptomHistory.join(", ");
-      const response = await axios.post("http://localhost:6969/chatbot", { message: combinedInput });
-      setResults(response.data.reply);
+      const response = await axios.post("http://localhost:6969/process", { message: combinedInput });
+      setResults(response.data);
     } catch (err) {
       setChat(prev => [...prev, { sender: "bot", text: "❌ Failed to fetch results." }]);
     }
+  };
+
+  const downloadResults = () => {
+    if (!results) return;
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(results, null, 2));
+    const dlAnchorElem = document.createElement('a');
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "medibot_results.json");
+    dlAnchorElem.click();
   };
 
   return (
@@ -76,12 +91,13 @@ function ChatbotPage() {
 
       {results && (
         <div className="results">
-          <h3>Diagnosis Results</h3>
-          <ul>
-            {results.diagnosis.map((d, i) => (
-              <li key={i}>{d.disease} (score: {d.score.toFixed(2)})</li>
-            ))}
-          </ul>
+          <h3>🩺 MediBot: Based on your symptoms, here are some possible conditions:</h3>
+          <ol>
+            {results.diagnosis && results.diagnosis.length > 0 ? results.diagnosis.map((d, i) => (
+              <li key={i}>{`${i+1}. ${d.disease} (match score: ${d.score})`}</li>
+            )) : <li>No diagnosis found.</li>}
+          </ol>
+          <button className="download-btn" onClick={downloadResults}>Download Results</button>
         </div>
       )}
     </div>

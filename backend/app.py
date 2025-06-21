@@ -12,7 +12,10 @@ def latest_input():
 @app.route("/process", methods=["POST"])
 def process_input():
     data = request.json
-    input_symptoms = data.get("input")
+    # Accept both 'input' and 'message' keys for compatibility
+    input_symptoms = data.get("input") or data.get("message")
+    if not input_symptoms:
+        return jsonify({"error": "No symptoms provided."}), 400
 
     matches = []
     for raw_symptom in input_symptoms.split(","):
@@ -22,12 +25,10 @@ def process_input():
 
     diseases = rank_diseases(matches, df)
     return jsonify({
-        "summary": {
-            "symptoms": matches,
-            "diagnosis": [
-                {"disease": d, "score": s} for d, s in diseases
-            ]
-        }
+        "symptoms": matches,
+        "diagnosis": [
+            {"disease": d, "score": s} for d, s in diseases
+        ]
     })
 
 if __name__ == "__main__":
