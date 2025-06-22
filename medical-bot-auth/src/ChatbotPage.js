@@ -23,12 +23,12 @@ function ChatbotPage() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:6969/process", { input: trimmed });
-      const reply = response.data.summary && response.data.summary.diagnosis && response.data.summary.diagnosis.length > 0
-        ? response.data.summary.diagnosis.map(d => `${d.disease}: ${d.score.toFixed(2)}`).join("\n")
-        : "Got it.";
+      await axios.post("http://localhost:6969/chat", {
+        symptom: trimmed,
+        score: 1.0  
+      });
       setSymptomHistory([...symptomHistory, trimmed]);
-      setChat(prev => [...prev, { sender: "bot", text: reply }]);
+      setChat(prev => [...prev, { sender: "bot", text: "✔️ Symptom noted." }]);
     } catch (err) {
       setChat(prev => [...prev, { sender: "bot", text: "⚠️ Error processing symptom." }]);
     }
@@ -36,8 +36,7 @@ function ChatbotPage() {
 
   const fetchResults = async () => {
     try {
-      const combinedInput = symptomHistory.join(", ");
-      const response = await axios.post("http://localhost:6969/process", { input: combinedInput });
+      const response = await axios.post("http://localhost:6969/process");
       setResults(response.data.summary);
     } catch (err) {
       setChat(prev => [...prev, { sender: "bot", text: "❌ Failed to fetch results." }]);
@@ -73,8 +72,11 @@ function ChatbotPage() {
         <div className="results">
           <h3>Diagnosis Results</h3>
           <ul>
-            {results.diagnosis.map((d, i) => (
-              <li key={i}>{d.disease} (score: {d.score.toFixed(2)})</li>
+            {Object.entries(results).map(([disease, explanation], i) => (
+              <li key={i} style={{ marginBottom: "1em" }}>
+                <strong>{disease.replace(/_/g, " ")}</strong>
+                <p>{explanation}</p>
+              </li>
             ))}
           </ul>
         </div>

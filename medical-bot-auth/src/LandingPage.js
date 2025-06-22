@@ -15,7 +15,15 @@ import "./LandingPage.css";
 
 function LandingPage() {
   const navigate = useNavigate();
-  const handleDoctorClick = () => {
+  const handleDoctorClick = async() => {
+    try {
+      await fetch("http://localhost:6969/session/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Failed to initialize session:", error);
+    }
     navigate("/chatbot");
   };
 
