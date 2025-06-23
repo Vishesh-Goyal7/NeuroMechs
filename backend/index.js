@@ -63,12 +63,16 @@ app.post("/chat", (req, res) => {
 app.post("/process", async (req, res) => {
   exec("../venv/bin/python3 nlp_input_convert.py", (err1) => {
     if (err1) return res.status(500).json({ error: "NLP step failed", details: err1.message });
+    console.log("asdf");
+    
 
     exec("../venv/bin/python3 T2S6EI.py", (err2) => {
       if (err2) return res.status(500).json({ error: "Prediction step failed", details: err2.message });
+      console.log("1234");
 
       exec("../venv/bin/python3 Watson\\ group\\ summary.py", (err3) => {
         if (err3) return res.status(500).json({ error: "Summary generation failed", details: err3.message });
+        console.log(5678);
 
         const summaryPath = path.join(__dirname, "shap_outputs", "shap_explanation_summary.json");
         if (fs.existsSync(summaryPath)) {

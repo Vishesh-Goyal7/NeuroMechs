@@ -8,6 +8,7 @@ import pandas as pd
 import shutil
 import matplotlib.pyplot as plt
 from S5DiseasePredictIteration2 import XGBoostDiseasePredictor
+import xgboost as xgb
 
 def predict_and_explain_top_n(json_path, dataset_path="your_dataset.csv", model_path="disease_model", top_n=5, output_dir="shap_outputs"):
     if os.path.exists(output_dir):
@@ -32,21 +33,23 @@ def predict_and_explain_top_n(json_path, dataset_path="your_dataset.csv", model_
     input_array = np.array(list(input_vector.values())).reshape(1, -1)
     predictions = predictor.predict_top_n(input_array[0], top_n=top_n)
 
-    # SHAP explainer
-    explainer = shap.TreeExplainer(predictor.model)
-    shap_values = explainer.shap_values(input_array)
+    # Use XGBoost's built-in SHAP value calculation for memory efficiency
+    booster = predictor.model.get_booster()
+    dmatrix = xgb.DMatrix(input_array, feature_names=predictor.symptom_names)
+    shap_values = booster.predict(dmatrix, pred_contribs=True)
 
     output_graph_paths = {}
     explanation_json = {}
 
     for disease, probability in predictions:
         class_idx = disease_names.index(disease)
-        class_shap = shap_values[0, :, class_idx]  # Correct indexing for SHAP array shape (1, features, classes)
+        # For multiclass, select the correct class row
+        class_shap = shap_values[0][class_idx]  # shape: (num_features + 1,)
 
         # Save waterfall plot
         fig = shap.plots._waterfall.waterfall_legacy(
-            expected_value=float(explainer.expected_value[class_idx]),
-            shap_values=class_shap,
+            expected_value=float(class_shap[-1]),  # The last value is the expected value (bias)
+            shap_values=class_shap[:-1],  # All but the last are feature SHAP values
             feature_names=predictor.symptom_names,
             features=input_array[0],
             max_display=10,
@@ -62,7 +65,7 @@ def predict_and_explain_top_n(json_path, dataset_path="your_dataset.csv", model_
         input_vals = {symptom: float(input_array[0][i]) for i, symptom in enumerate(predictor.symptom_names)}
 
         explanation_json[disease] = {
-            "expected_value": float(explainer.expected_value[class_idx]),
+            "expected_value": float(class_shap[-1]),
             "probability": float(probability),
             "shap_values": shap_vals,
             "input_values": input_vals
