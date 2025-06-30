@@ -22,4 +22,8 @@ echo "✅ Files downloaded. Starting server..."
 gdown --id 1N2HmwjOVoA0sUq1sTuZIPcG-nxODiKE2 -O disease_model_model.json
 gdown --id 15yRkNW0TiGHGokbk9JHwX-3JNj75rryC -O filtered_dataset_min15.csv
 
-node index.js
+JS_SERVER_FILE="index.js"
+node "$JS_SERVER_FILE" &
+SERVER_PID=$!
+
+kill "$SERVER_PID"
