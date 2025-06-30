@@ -14,21 +14,18 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 6969;
 
-// Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log("Connected to MongoDB"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-// User schema and model
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true }
 });
 const User = mongoose.model("User", userSchema);
 
-// Register user
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -44,7 +41,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Login user
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -60,7 +56,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Medibot session routes
 const sessionFiles = [
   "medibot_result.json",
   "input.json"
@@ -114,11 +109,11 @@ app.post("/chat", (req, res) => {
 });
 
 app.post("/process", async (req, res) => {
-  exec("../venv/bin/python3.10 nlp_input_convert.py", (err1) => {
+  exec("python3 nlp_input_convert.py", (err1) => {
     if (err1) return res.status(500).json({ error: "NLP step failed", details: err1.message });
     console.log("nlp_input_convert.py finished");
 
-    exec("../venv/bin/python3.10 T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
+    exec("python3 T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
       console.log("T2S6EI.py finished");
       if (err2) {
         console.error(stderr);
@@ -126,7 +121,7 @@ app.post("/process", async (req, res) => {
       }
       console.log(stdout);
 
-      exec("../venv/bin/python3.10 watsonGroupSummary.py", (err3, stdout3, stderr3) => {
+      exec("python3 watsonGroupSummary.py", (err3, stdout3, stderr3) => {
         console.log("Watson group summary.py finished");
         if (err3) return res.status(500).json({ error: "Summary generation failed", details: err3.message });
         console.log(5678);

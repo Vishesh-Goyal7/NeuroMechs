@@ -1,0 +1,9 @@
+{
+  "date": "2025-06-30",
+  "input_symptoms": {
+    "fever": 1,
+    "cold": 1,
+    "body pain" : 1,
+    "ulcers in mouth" : 1
+  }
+}
