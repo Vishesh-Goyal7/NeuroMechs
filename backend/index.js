@@ -57,8 +57,8 @@ app.post("/login", async (req, res) => {
 });
 
 const sessionFiles = [
-  "medibot_result.json",
-  "input.json"
+  "NeuroMechs/backend/medibot_result.json",
+  "NeuroMechs/backend/input.json"
 ];
 
 app.post("/session/start", (req, res) => {
@@ -97,7 +97,6 @@ app.post("/chat", (req, res) => {
       const rawData = fs.readFileSync(inputPath, "utf8");
       inputData = JSON.parse(rawData);
     }
-
     inputData.input_symptoms[symptom] = score;
 
     fs.writeFileSync(inputPath, JSON.stringify(inputData, null, 2));
@@ -109,11 +108,16 @@ app.post("/chat", (req, res) => {
 });
 
 app.post("/process", async (req, res) => {
-  exec("python3 nlp_input_convert.py", (err1) => {
+  const nlpScript = path.resolve(__dirname, "nlp_input_convert.py");
+  const predictScript = path.resolve(__dirname, "T2S6EI.py");
+  const summaryPath = path.resolve(__dirname, "watsonGroupSummary.py");
+  const pythonPath = "venv/bin/python3.10"; 
+
+  exec(`${pythonPath} ${nlpScript}`, (err1) => {
     if (err1) return res.status(500).json({ error: "NLP step failed", details: err1.message });
     console.log("nlp_input_convert.py finished");
 
-    exec("python3 T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
+    exec(`${pythonPath} ${predictScript}`, { cwd: __dirname }, (err2, stdout, stderr) => {
       console.log("T2S6EI.py finished");
       if (err2) {
         console.error(stderr);
@@ -121,7 +125,7 @@ app.post("/process", async (req, res) => {
       }
       console.log(stdout);
 
-      exec("python3 watsonGroupSummary.py", (err3, stdout3, stderr3) => {
+      exec(`${pythonPath} ${summaryPath}`, (err3, stdout3, stderr3) => {
         console.log("Watson group summary.py finished");
         if (err3) return res.status(500).json({ error: "Summary generation failed", details: err3.message });
         console.log(5678);
@@ -138,4 +142,4 @@ app.post("/process", async (req, res) => {
   });
 });
 
-app.listen(PORT, () => console.log(`Pipeline server running on port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`Pipeline server running on port ${PORT}`));
