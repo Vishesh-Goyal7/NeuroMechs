@@ -1,0 +1,94 @@
+/* ...existing code... */
+.records-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
+  padding: 48px 0 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.records-page h1 {
+  color: #1082c7;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 32px;
+}
+
+.records-list {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+
+.record-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(16,130,199,0.13), 0 1.5px 8px rgba(0,0,0,0.04);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.record-info {
+  font-size: 1.08rem;
+  color: #1082c7;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.record-pdf-btn {
+  width: 100%;
+  max-width: 260px;
+  padding: 14px 0;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  font-size: 1.13rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+  text-align: center;
+  margin-top: 8px;
+  text-decoration: none;
+  display: block;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.record-pdf-btn:hover {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}
+
+.records-loading {
+  color: #1082c7;
+  font-size: 1.2rem;
+  margin: 32px 0;
+}
+
+.records-error {
+  color: #e53e3e;
+  background: #fff0f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .records-list, .record-card {
+    max-width: 98vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+}

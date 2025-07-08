@@ -8,7 +8,7 @@ import availabilityIcon from "./availability.png";
 import secureIcon from "./secure.png";
 import multiuserIcon from "./multiuser.png";
 import AboutPage from "./AboutPage";
-import ServicesPage from "./ServicesPage";
+import RecordsPage from "./RecordsPage";
 import ContactPage from "./ContactPage";
 import ChatbotPage from "./ChatbotPage";
 import "./LandingPage.css";
@@ -38,7 +38,7 @@ function LandingPage() {
         <nav className="nav-links">
           <Link to="/landing" className="nav-link">Home</Link>
           <Link to="/about" className="nav-link">About</Link>
-          <Link to="/services" className="nav-link">Services</Link>
+          <Link to="/records" className="nav-link">Records</Link>
           <Link to="/contact" className="nav-link">Contact</Link>
         </nav>
       </header>
@@ -77,7 +77,7 @@ function LandingPage() {
                       <img src={availabilityIcon} alt="24/7 Availability" className="feature-icon-img" />
                       <div>
                         <strong>24/7 Availability</strong>
-                        <p>Access healthcare services anytime, day or night.</p>
+                        <p>Access healthcare records anytime, day or night.</p>
                       </div>
                     </div>
                     <div className="feature-card">
@@ -107,7 +107,7 @@ function LandingPage() {
             }
           />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/records" element={<RecordsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/chatbot" element={<ChatbotPage />} />
         </Routes>

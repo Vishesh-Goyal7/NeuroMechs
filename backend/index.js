@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 8008;
+const PORT = process.env.PORT || 6969;
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
@@ -114,11 +114,11 @@ app.post("/chat", (req, res) => {
 });
 
 app.post("/process", async (req, res) => {
-  exec("../.venv/bin/python3.10 nlp_input_convert.py", { cwd: __dirname }, (err1) => {
+  exec("../.venv/bin/python3 nlp_input_convert.py", (err1) => {
     if (err1) return res.status(500).json({ error: "NLP step failed", details: err1.message });
     console.log("nlp_input_convert.py finished");
 
-    exec("../.venv/bin/python3.10 T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
+    exec("../.venv/bin/python3 T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
       console.log("T2S6EI.py finished");
       if (err2) {
         console.error(stderr);
@@ -126,7 +126,7 @@ app.post("/process", async (req, res) => {
       }
       console.log(stdout);
 
-      exec("../.venv/bin/python3.10 watsonGroupSummary.py", { cwd: __dirname }, (err3, stdout3, stderr3) => {
+      exec("../.venv/bin/python3 watsonGroupSummary.py", (err3, stdout3, stderr3) => {
         console.log("Watson group summary.py finished");
         if (err3) return res.status(500).json({ error: "Summary generation failed", details: err3.message });
         console.log(5678);

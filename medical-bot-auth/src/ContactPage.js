@@ -27,7 +27,7 @@ function ContactPage() {
         <nav className="nav-links">
           <a href="/landing" className="nav-link">Home</a>
           <a href="/about" className="nav-link">About</a>
-          <a href="/services" className="nav-link">Services</a>
+          <a href="/records" className="nav-link">Records</a>
           <a href="/contact" className="nav-link active">Contact</a>
         </nav>
       </header>

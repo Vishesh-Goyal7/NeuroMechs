@@ -1,0 +1,103 @@
+/* Download form background and layout */
+.download-form-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.download-form {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 12px 48px rgba(16,130,199,0.13), 0 2px 12px rgba(0,0,0,0.04);
+  padding: 40px 32px 32px 32px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.download-form h2 {
+  color: #1082c7;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.download-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+  color: #1082c7;
+  font-size: 1.08rem;
+  gap: 6px;
+}
+
+.download-form input,
+.download-form select {
+  padding: 13px 12px;
+  border: 2px solid #4fd1c5;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  background: #f7fbfd;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.download-form input:focus,
+.download-form select:focus {
+  border-color: #1082c7;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+}
+
+.save-download-btn {
+  width: 100%;
+  padding: 16px 0;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  margin-top: 18px;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.save-download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.save-download-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}
+
+.form-error {
+  color: #e53e3e;
+  background: #fff0f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .download-form {
+    padding: 24px 8vw 24px 8vw;
+    max-width: 98vw;
+  }
+}

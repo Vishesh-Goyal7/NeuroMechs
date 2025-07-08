@@ -6,28 +6,30 @@ html, body {
 }
 
 .chat-page {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* vertically center everything */
-  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
-  padding: 0 16px;
+  justify-content: flex-start;
+  padding-top: 60px;
 }
 
 .chat-layout {
   display: flex;
-  flex-direction: row;  /* keep boxes side by side */
+  flex-wrap: wrap;
+  gap: 100px;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 24px;
   justify-content: center;
-  align-items: flex-start;
-  gap: 156px; /* adjust spacing between boxes */
-  max-height: 90vh;
+  align-items: center; /* <-- center vertically as well as horizontally */
+  margin: 60px auto 0;
 }
 
 .chat-column, .results-column {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,15 +43,14 @@ html, body {
   width: 100%;
   max-width: 600px;
   min-height: 320px;
-  max-height: 65vh;
-  padding: 32px 32px ;
+  max-height: 72vh;
+  padding: 32px 24px 64px;
   display: flex;
   flex-direction: column;
+  gap: 16px;
   overflow-y: auto;
-  align-self: center;
+  align-self: stretch;
   justify-content: flex-start;
-  margin-bottom: 32px;
-  padding-bottom: 20px;
 }
 
 /* Chat Bubbles */
@@ -130,10 +131,11 @@ html, body {
   max-width: 260px;
   min-width: 180px;
   width: 100%;
+  margin-top: 18px;
   padding: 14px 0;
   background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
   color: #fff;
-  font-size: 1.13rem;
+  font-size: 1.18rem;
   font-weight: 800;
   border: none;
   border-radius: 16px;
@@ -143,6 +145,8 @@ html, body {
   text-align: center;
   align-self: center;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Ensure both buttons in a row have the same width and are always aligned */
@@ -198,6 +202,30 @@ html, body {
   }
 }
 
+@media (max-width: 600px) {
+  .chat-window, .results, .chat-input-area {
+    max-width: 98vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  .chat-page {
+    padding-top: 24px;
+  }
+
+  .buttons-row {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .buttons-row .view-results-btn,
+  .buttons-row .download-btn {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    white-space: normal; /* allow wrapping on small screens */
+  }
+}
 
 .view-results-btn:hover,
 .download-btn:hover {
