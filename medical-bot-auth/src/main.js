@@ -20,7 +20,7 @@ function Main() {
       <h1 className="main-title">Hey, welcome to <span className="brand">VITA.ai</span></h1>
       <div className="main-btn-group">
         <button className="main-btn doctor" onClick={() => navigate("/login?role=doctor")}>I'm a Doctor</button>
-        <button className="main-btn patient" onClick={() => navigate("/login?role=patient")}>I'm a Patient</button>
+        <button className="main-btn patient" onClick={() => navigate("/login-patient")}>I'm a Patient</button>
       </div>
     </div>
   );

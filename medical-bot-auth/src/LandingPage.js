@@ -15,17 +15,6 @@ import "./LandingPage.css";
 
 function LandingPage() {
   const navigate = useNavigate();
-  const handleDoctorClick = async() => {
-    try {
-      await fetch("http://localhost:6969/session/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-    } catch (error) {
-      console.error("Failed to initialize session:", error);
-    }
-    navigate("/chatbot");
-  };
 
   return (
     <div className="landing-bg">
@@ -99,7 +88,7 @@ function LandingPage() {
 
                 <section className="consult-section">
                   <h2>Start your consultation</h2>
-                  <button className="doctor-btn" onClick={handleDoctorClick}>
+                  <button className="doctor-btn" onClick={() => navigate("/chatbot")}>
                     Start consultation
                   </button>
                 </section>

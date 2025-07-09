@@ -1,0 +1,208 @@
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', Arial, sans-serif;
+}
+
+.login-bg {
+  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Top-left logo and brand */
+.logo-fixed {
+  position: absolute;
+  top: 40px;
+  left: 56px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.logo-img {
+  width: 40px;
+  margin-right: 30px;
+}
+
+.name-img {
+  height: 40px;
+  width: auto;
+  display: block;
+  margin-left: 10px;
+}
+
+.hex-left {
+  left: -100px;
+  bottom: -80px;
+  animation: floatHexLeft 3s ease-in-out infinite alternate;
+}
+
+.hex-right {
+  right: -120px;
+  top: -80px;
+  animation: floatHexRight 4s ease-in-out infinite alternate;
+}
+
+/* Outlined hexagons */
+.hex-outline {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 80px;
+  border: 3.5px solid #1082c7;
+  background: transparent;
+  opacity: 0.35;
+  z-index: 2;
+  clip-path: polygon(
+  30% 18%, 70% 18%, 
+  92% 50%, 
+  70% 82%, 30% 82%, 
+  8% 50%
+);
+border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.hex-outline-1 {
+  left: 80px;
+  top: 120px;
+  border-color: #1082c7;
+  opacity: 0.25;
+  transform: rotate(10deg);
+}
+
+.hex-outline-2 {
+  right: 120px;
+  bottom: 80px;
+  border-color: #4fd1c5;
+  opacity: 0.22;
+  transform: rotate(-8deg) scale(1.15);
+}
+
+.hex-outline-3 {
+  left: 50%;
+  top: 60%;
+  border-color: #1082c7;
+  opacity: 0.18;
+  transform: translate(-50%, -50%) scale(1.3) rotate(5deg);
+}
+
+/* Animations for lively background */
+@keyframes floatHexLeft {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(-24px) scale(1.04);}
+}
+@keyframes floatHexRight {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(18px) scale(1.03);}
+}
+
+/* Centered login card */
+.login-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 28px;
+  box-shadow: 0 8px 48px rgba(16,130,199,0.13), 0 1.5px 8px rgba(0,0,0,0.04);
+  padding: 64px 48px 40px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.login-container:hover {
+  box-shadow: 0 16px 64px rgba(16,130,199,0.18), 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.welcome-title {
+  font-size: 2.7rem;
+  font-weight: 900;
+  margin-bottom: 48px;
+  color: #222;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 22px 18px;
+  border: 2.5px solid #1082c7;
+  border-radius: 14px;
+  font-size: 1.25rem;
+  background: #f7fbfd;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  margin-bottom: 0;
+  box-shadow: 0 1.5px 8px rgba(16,130,199,0.04);
+}
+
+.login-input:focus {
+  border: 2.5px solid #0e5e8e;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+}
+
+.forgot-text {
+  color: #6c7a89;
+  font-size: 1.08rem;
+  margin-bottom: 0;
+  text-align: center;
+  margin-top: -18px;
+  margin-bottom: 18px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 22px 0;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  margin-bottom: 0;
+  margin-top: 10px;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.login-btn:hover {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}
+
+.signup-link {
+  color: #6c7a89;
+  font-size: 1.18rem;
+  text-align: center;
+  margin-top: 32px;
+  letter-spacing: 0.2px;
+}
+
+.underline-link {
+  color: #1082c7;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 700;
+  margin-left: 4px;
+}

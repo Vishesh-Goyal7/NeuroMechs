@@ -11,22 +11,26 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* vertically center everything */
+  justify-content: center;
   background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
   padding: 0 16px;
+  gap: 16px;
 }
 
 .chat-layout {
   display: flex;
-  flex-direction: row;  /* keep boxes side by side */
   justify-content: center;
   align-items: flex-start;
-  gap: 156px; /* adjust spacing between boxes */
-  max-height: 90vh;
+  gap: 148px;
+  max-width: 400px; /* center the whole layout */
+  margin: 32px auto; /* center the layout with some margin */
+  width: 100%;
+  padding:24px;
 }
 
-.chat-column, .results-column {
-  width: 100%;
+.chat-column,
+.results-column {
+  flex: 1 1 0;
   max-width: 500px;
   display: flex;
   flex-direction: column;
@@ -39,7 +43,7 @@ html, body {
   border-radius: 28px;
   box-shadow: 0 12px 48px rgba(16,130,199,0.13), 0 2px 12px rgba(0,0,0,0.04);
   width: 100%;
-  max-width: 600px;
+  min-width: 400px;
   min-height: 320px;
   max-height: 65vh;
   padding: 32px 32px ;
@@ -63,6 +67,7 @@ html, body {
   word-break: break-word;
   box-shadow: 0 1.5px 8px rgba(16,130,199,0.04);
   transition: background 0.2s;
+  margin-bottom: 12px;
 }
 
 .chat-bubble.bot {
@@ -145,7 +150,6 @@ html, body {
   display: block;
 }
 
-/* Ensure both buttons in a row have the same width and are always aligned */
 .buttons-row {
   display: flex;
   gap: 0;
@@ -175,11 +179,11 @@ html, body {
   min-width: 180px;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
   .chat-layout {
     flex-direction: column;
     gap: 32px;
-    padding: 0 20px;
+    padding: 20px 20px;
     align-items: center; /* ensure center on mobile too */
   }
 
