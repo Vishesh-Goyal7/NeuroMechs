@@ -35,6 +35,7 @@ function RecordsPage() {
         {records.map((rec) => (
           <div className="record-card" key={rec._id}>
             <div className="record-info">
+              <div><b>Treating Doctor's Email: </b>{rec.doctorEmail}</div>
               <div><b>Name:</b> {rec.name}</div>
               <div><b>Email:</b> {rec.email}</div>
               <div><b>Age:</b> {rec.age}</div>
