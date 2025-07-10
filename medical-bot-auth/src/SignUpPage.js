@@ -48,7 +48,7 @@ function SignUpPage() {
     setTouched(true);
     if (!fullName || !email || !allRulesMet || !passwordsMatch || emailError) return;
     try {
-      const response = await fetch("http://localhost:6969/register", {
+      const response = await fetch("http://localhost:6969/register-doctor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: email, password }),
@@ -56,7 +56,7 @@ function SignUpPage() {
       const data = await response.json();
       if (response.ok) {
         alert("Registration successful!");
-        navigate("/landing");
+        navigate("/");
       } else {
         alert(data.error || "Registration failed");
       }
@@ -152,7 +152,7 @@ function SignUpPage() {
         </form>
         <div className="signup-link">
           Already have an account?{" "}
-          <Link to="/" className="underline-link">
+          <Link to="/login-doctor" className="underline-link">
             Login
           </Link>
         </div>

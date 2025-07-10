@@ -11,10 +11,24 @@ import AboutPage from "./AboutPage";
 import RecordsPage from "./RecordsPage";
 import ContactPage from "./ContactPage";
 import ChatbotPage from "./ChatbotPage";
+import axios from "axios";
 import "./LandingPage.css";
 
 function LandingPage() {
   const navigate = useNavigate();
+
+  const sessionStart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:6969/session/start", {},{
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }});
+      navigate('/chatbot')
+    } catch (err) {
+    }
+  };
 
   return (
     <div className="landing-bg">
@@ -88,7 +102,7 @@ function LandingPage() {
 
                 <section className="consult-section">
                   <h2>Start your consultation</h2>
-                  <button className="doctor-btn" onClick={() => navigate("/chatbot")}>
+                  <button className="doctor-btn" onClick={sessionStart}>
                     Start consultation
                   </button>
                 </section>

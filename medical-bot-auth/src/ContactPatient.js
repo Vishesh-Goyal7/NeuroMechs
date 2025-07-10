@@ -10,7 +10,7 @@ import TanishtaImg from './TANISHTA.jpeg'
 import VisheshImg from './VISHESH.JPG'
 import SakethImg from './SAKETH.jpg'
 
-function ContactPage() {
+function ContactPatient() {
   return (
     <div className="landing-bg">
       {/* Header */}
@@ -20,10 +20,10 @@ function ContactPage() {
           <img src={nameImg} alt="VITA.AI" className="name-img" />
         </div>
         <nav className="nav-links">
-          <Link to="/landing" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About</Link>
-          <Link to="/records" className="nav-link">Records</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
+          <Link to="/landing-patient" className="nav-link">Home</Link>
+          <Link to="/about-patient" className="nav-link">About</Link>
+          <Link to="/records-patient" className="nav-link">Records</Link>
+          <Link to="/contact-patient" className="nav-link">Contact</Link>
         </nav>
       </header>
       <div className="contact-container">
@@ -90,4 +90,4 @@ function ContactPage() {
   );
 }
 
-export default ContactPage;
+export default ContactPatient;

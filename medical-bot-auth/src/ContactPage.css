@@ -1,11 +1,7 @@
 /* Remove page scroll */
-body, html, .landing-bg.no-scroll {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #e5f6ff;
+body, html {
+  height: unset;
+  overflow: unset;
 }
 
 /* Header styling */
@@ -14,7 +10,7 @@ body, html, .landing-bg.no-scroll {
   justify-content: space-between;
   align-items: center;
   padding: 12px 32px;
-  background-color: #ffffff;
+  background-color: #d6effc;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   z-index: 1000;
 }
@@ -49,20 +45,25 @@ body, html, .landing-bg.no-scroll {
   color: #0c66a1;
 }
 
-/* Contact container */
+/* Remove no-scroll and allow scrolling */
+.landing-bg {
+  height: unset;
+  overflow: unset;
+}
+
 .contact-container {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 32px 16px 16px 16px;
   background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
   border-radius: 24px;
   box-shadow: 0 4px 24px rgba(16, 130, 199, 0.07);
   text-align: center;
-  height: calc(100vh - 80px);
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
+  overflow: unset;
 }
 
 /* Titles */

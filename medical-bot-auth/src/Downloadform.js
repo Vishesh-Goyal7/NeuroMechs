@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Downloadform.css';
 
 const initialState = {
@@ -11,7 +11,9 @@ const initialState = {
 
 function Downloadform() {
   const location = useLocation();
+  const navigate = useNavigate();
   const diagnosisResults = location.state?.results || null;
+  const prescription = location.state?.prescription || '';
   const [form, setForm] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,14 +27,17 @@ function Downloadform() {
     setLoading(true);
     setError('');
     try {
-      // Send form data + diagnosis results to backend to save in MongoDB and generate PDF
-      const res = await fetch('http://localhost:5000/api/download', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ ...form, results: diagnosisResults }),
-});
+      const token = localStorage.getItem("token");
+      const doctorEmail = localStorage.getItem("username");
+      const res = await fetch('http://localhost:6969/api/download', {
+        method: 'POST',
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...form, results: diagnosisResults, prescription, doctorEmail }),
+      });
       if (!res.ok) throw new Error('Failed to save or download');
-      // Download PDF
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -43,6 +48,7 @@ function Downloadform() {
       a.remove();
       window.URL.revokeObjectURL(url);
       setForm(initialState);
+      navigate('/landing');
     } catch (err) {
       setError('Error: ' + err.message);
     } finally {

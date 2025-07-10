@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "./LoginPage.css";
+import "./LoginPatient.css";
 import logo from "./neuro.png";
 import nameImg from "./name.png"; 
+import axios from "axios";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,20 +17,19 @@ function LoginPage() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:6969/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        navigate("/landing-patient"); // Redirect to patient landing page
+      const user = await axios.post('http://localhost:6969/login-patient', {username : email, password});
+      localStorage.setItem("username", user.data.username);
+      localStorage.setItem("token", user.data.token);
+      navigate('/landing-patient')
+    } catch (error) {
+      if(error.response){
+        const code = error.response.status;
+        if(code === 401) alert("No such user exist");
+        else if(code === 402) alert("You are not a patient");
+        else if(code === 403) alert("Invalid credentials");
       } else {
-        alert(data.error || "Login failed");
+        alert("Server not responsive");
       }
-    } catch (err) {
-      console.error("Login error:", err);
-      alert("Something went wrong.");
     }
   };
 
@@ -72,7 +72,7 @@ function LoginPage() {
           </form>
           <div className="signup-link">
             Don’t have an account?{" "}
-            <Link to="/signup" className="underline-link">
+            <Link to="/signup-patient" className="underline-link">
               Sign Up
             </Link>
           </div>

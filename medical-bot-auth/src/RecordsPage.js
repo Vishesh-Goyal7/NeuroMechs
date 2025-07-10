@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./RecordsPage.css";
 
 function RecordsPage() {
@@ -7,16 +8,22 @@ function RecordsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/records")
-      .then((res) => res.json())
-      .then((data) => {
-        setRecords(data);
+    const fetchRecords = async() => {
+      try {
+        const doctorEmail = localStorage.getItem("username");
+        const token = localStorage.getItem("token");
+
+        const response = await axios.post('http://localhost:6969/api/records-doctor', {doctorEmail}, {headers:{Authorization:`Bearer ${token}`}});
+
         setLoading(false);
-      })
-      .catch((err) => {
-        setError("Failed to load records");
+        setRecords(response.data.records);
+      } catch (error) {
+        setError("Failed to fetch records");
         setLoading(false);
-      });
+      }
+    }
+
+    fetchRecords();
   }, []);
 
   return (
@@ -36,7 +43,7 @@ function RecordsPage() {
             </div>
             <a
               className="record-pdf-btn"
-              href={`http://localhost:5000/api/record/${rec._id}/pdf`}
+              href={`http://localhost:6969/api/records/${rec._id}/pdf`}
               target="_blank"
               rel="noopener noreferrer"
             >

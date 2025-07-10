@@ -36,9 +36,9 @@ function LandingPage() {
         </div>
         <nav className="nav-links">
           <Link to="/landing-patient" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/about-patient" className="nav-link">About</Link>
           <Link to="/records-patient" className="nav-link">Records</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
+          <Link to="/contact-patient" className="nav-link">Contact</Link>
         </nav>
       </header>
 

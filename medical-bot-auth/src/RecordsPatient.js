@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./RecordsPage.css";
 
-function RecordsPatient() {
+function RecordsPage() {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/records")
-      .then((res) => res.json())
-      .then((data) => {
-        setRecords(data);
+    const fetchRecords = async() => {
+      try {
+        const patientEmail = localStorage.getItem("username");
+        const token = localStorage.getItem("token");
+
+        const response = await axios.post('http://localhost:6969/api/records-patient', {email : patientEmail}, {headers:{Authorization:`Bearer ${token}`}});
+
         setLoading(false);
-      })
-      .catch((err) => {
-        setError("Failed to load records");
+        setRecords(response.data.records);
+      } catch (error) {
+        setError("Failed to fetch records");
         setLoading(false);
-      });
+      }
+    }
+
+    fetchRecords();
   }, []);
 
   return (
     <div className="records-page">
-      <h1>Your Medical Records</h1>
+      <h1>Patient Records</h1>
       {loading && <div className="records-loading">Loading...</div>}
       {error && <div className="records-error">{error}</div>}
       <div className="records-list">
@@ -33,15 +40,9 @@ function RecordsPatient() {
               <div><b>Age:</b> {rec.age}</div>
               <div><b>Gender:</b> {rec.gender}</div>
               <div><b>Date:</b> {new Date(rec.createdAt).toLocaleString()}</div>
+              <br/> <br/>
+              <div><b>Doctor's Prescription:</b> {rec.prescription}</div>
             </div>
-            <a
-              className="record-pdf-btn"
-              href={`http://localhost:5000/api/record/${rec._id}/pdf`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open PDF
-            </a>
           </div>
         ))}
       </div>
@@ -49,4 +50,4 @@ function RecordsPatient() {
   );
 }
 
-export default RecordsPatient;
+export default RecordsPage;

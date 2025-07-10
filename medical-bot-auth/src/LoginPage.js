@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./LoginPage.css";
 import logo from "./neuro.png";
 import nameImg from "./name.png"; 
+import axios from "axios"
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,20 +17,29 @@ function LoginPage() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:6969/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
+      const response = await axios.post("http://localhost:6969/login-doctor", {
+        username : email,
+        password
       });
-      const data = await response.json();
-      if (response.ok) {
-        navigate("/landing");
-      } else {
-        alert(data.error || "Login failed");
-      }
+
+      localStorage.setItem("username", response.data.username);
+      localStorage.setItem("token", response.data.token);
+      navigate('/landing');
+
     } catch (err) {
-      console.error("Login error:", err);
-      alert("Something went wrong.");
+      if (err.response) {
+        const code = err.response.status;
+        if (code === 401) {
+          alert("No such username exists");
+        } else if (code === 402) {
+          alert("You are not a doctor");
+        } else if (code === 403) {
+          alert("Invalid Password doctor");
+        }
+      } else {
+        console.error("Login error:", err);
+        alert("Server not reachable.");
+      }
     }
   };
 
@@ -47,7 +57,7 @@ function LoginPage() {
         <div className="hex-outline hex-outline-3"></div>
         {/* Centered login card */}
         <div className="login-container">
-          <h1 className="welcome-title">Welcome Back</h1>
+          <h1 className="welcome-title">Hello Doctor</h1>
           <form className="login-form" onSubmit={handleLogin}>
             <input
               type="email"
@@ -72,7 +82,7 @@ function LoginPage() {
           </form>
           <div className="signup-link">
             Don’t have an account?{" "}
-            <Link to="/signup" className="underline-link">
+            <Link to="/signup-doctor" className="underline-link">
               Sign Up
             </Link>
           </div>

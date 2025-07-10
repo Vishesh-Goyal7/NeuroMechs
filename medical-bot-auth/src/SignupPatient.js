@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import logo from "./neuro.png";
 import nameImg from "./name.png"; 
+import axios from "axios";
 
 const passwordRules = [
   { label: "At least 8 characters", test: (pw) => pw.length >= 8 },
@@ -13,7 +14,6 @@ const passwordRules = [
 ];
 
 function SignUpPage() {
-  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
@@ -46,23 +46,19 @@ function SignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
-    if (!fullName || !email || !allRulesMet || !passwordsMatch || emailError) return;
+    if (!email || !allRulesMet || !passwordsMatch || emailError) return;
     try {
-      const response = await fetch("http://localhost:6969/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert("Registration successful!");
-        navigate("/landing-patient"); // Redirect to patient landing page
-      } else {
-        alert(data.error || "Registration failed");
-      }
+      const response = await axios.post('http://localhost:6969/register-patient', {username : email, password : password})
+      alert("Registration successful!");
+      navigate("/");
     } catch (err) {
-      console.error("Registration error:", err);
-      alert("Something went wrong.");
+      if(err.response){
+        const code = err.response.status;
+        if(code === 500) alert("You haven't been treated here");
+        else if(code === 409) alert("Username already exists");
+      } else {
+        alert("Server not responding");
+      }
     }
   };
 
@@ -82,14 +78,6 @@ function SignUpPage() {
       <div className="login-container">
         <h1 className="welcome-title">Create Your Account</h1>
         <form className="login-form" onSubmit={handleSubmit} autoComplete="off">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="login-input"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          />
           <input
             type="email"
             placeholder="Email"
@@ -140,7 +128,6 @@ function SignUpPage() {
             type="submit"
             className="login-btn"
             disabled={
-              !fullName ||
               !email ||
               !allRulesMet ||
               !passwordsMatch ||
@@ -152,7 +139,7 @@ function SignUpPage() {
         </form>
         <div className="signup-link">
           Already have an account?{" "}
-          <Link to="/" className="underline-link">
+          <Link to="/login-patient" className="underline-link">
             Login
           </Link>
         </div>
