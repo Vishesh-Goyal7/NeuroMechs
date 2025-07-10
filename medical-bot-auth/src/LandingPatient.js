@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import logo from "./neuro.png";
 import nameImg from "./name.png"; 
 import doctorsImg from "./doctors.png";
@@ -13,18 +13,6 @@ import ContactPage from "./ContactPage";
 import "./LandingPage.css";
 
 function LandingPage() {
-  const navigate = useNavigate();
-  const handleDoctorClick = async() => {
-    try {
-      await fetch("http://localhost:6969/session/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-    } catch (error) {
-      console.error("Failed to initialize session:", error);
-    }
-    navigate("/chatbot");
-  };
 
   return (
     <div className="landing-bg">

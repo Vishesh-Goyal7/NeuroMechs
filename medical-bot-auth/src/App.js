@@ -24,19 +24,19 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/login-doctor" element={<LoginPage />} />
         <Route path="/signup-doctor" element={<SignUpPage />} />
-        <Route path="/landing/*" element={<ProtectedRoute><LandingPage /> </ProtectedRoute>} />
-        <Route path="/about" element={<ProtectedRoute><AboutPage /> </ProtectedRoute>} />
-        <Route path="/records" element={<ProtectedRoute><RecordsPage /> </ProtectedRoute>} />
-        <Route path="/contact" element={<ProtectedRoute><ContactPage /> </ProtectedRoute>} />
-        <Route path="/chatbot" element={<ProtectedRoute><ChatbotPage /> </ProtectedRoute>} />
-        <Route path="/download" element={<ProtectedRoute><Downloadform /> </ProtectedRoute>} />
+        <Route path="/landing/*" element={<ProtectedRoute element={LandingPage} requiredRole="DOCTOR"/>} />
+        <Route path="/about" element={<ProtectedRoute element={AboutPage} requiredRole="DOCTOR"/>} />
+        <Route path="/records" element={<ProtectedRoute element={RecordsPage} requiredRole="DOCTOR"/>} />
+        <Route path="/contact" element={<ProtectedRoute element={ContactPage} requiredRole="DOCTOR"/>} />
+        <Route path="/chatbot" element={<ProtectedRoute element={ChatbotPage} requiredRole="DOCTOR"/>} />
+        <Route path="/download" element={<ProtectedRoute element={Downloadform} requiredRole="DOCTOR"/>} />
         {/* Patient-specific routes */}
-        <Route path="/login-patient" element={<LoginPatient />} />
-        <Route path="/signup-patient" element={<SignupPatient />} />
-        <Route path="/landing-patient/*" element={<LandingPatient />} />
-        <Route path="/about-patient/*" element={<AboutPatient />} />
-        <Route path="/records-patient" element={<RecordsPatient />} />
-        <Route path="/contact-patient" element={<ContactPatient />} />
+        <Route path="/login-patient" element={<LoginPatient/>}/>
+        <Route path="/signup-patient" element={<SignupPatient/>}/>
+        <Route path="/landing-patient/*" element={<ProtectedRoute element={LandingPatient} requiredRole="PATIENT"/>} />
+        <Route path="/about-patient/*" element={<ProtectedRoute element={AboutPatient} requiredRole="PATIENT"/>} />
+        <Route path="/records-patient" element={<ProtectedRoute element={RecordsPatient} requiredRole="PATIENT"/>} />
+        <Route path="/contact-patient" element={<ProtectedRoute element={ContactPatient} requiredRole="PATIENT"/>} />
       </Routes>
     </Router>
   );

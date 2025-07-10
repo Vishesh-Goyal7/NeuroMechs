@@ -62,9 +62,9 @@ app.post('/login-doctor', async (req, res) => {
     if (!match) return res.status(403).json({ error: "Incorrect password" });
 
     const token = jwt.sign(
-      { username : user.username },
+      { username : user.username, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: '2h' }
     );
 
     res.status(200).json({ message: "Login successful", token, username });
@@ -85,9 +85,9 @@ app.post('/login-patient', async(req, res) => {
     if (!match) return res.status(403).json({ error: "Incorrect password" });
 
     const token = jwt.sign(
-      { username : user.username },
+      { username : user.username, role : user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: '2h' }
     );
     res.status(200).json({ message: "Login successful", token, username });
   } catch (err) {
