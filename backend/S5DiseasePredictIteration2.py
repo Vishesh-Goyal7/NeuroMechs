@@ -93,7 +93,7 @@ class XGBoostDiseasePredictor:
 # if __name__ == "__main__":
 #     model = XGBoostDiseasePredictor()
 
-#     X_train, X_test, y_train, y_test, sw_train, sw_test = model.load_and_prepare_data("/Users/visheshgoyal/NeuroMechs/CleansedDataset/filtered_dataset_min15.csv")
+#     X_train, X_test, y_train, y_test, sw_train, sw_test = model.load_and_prepare_data("filtered_dataset_min15.csv")
 #     model.train(X_train, y_train, sw_train)
 #     model.save("disease_model")  # Saves: disease_model_model.json + disease_model_meta.pkl
 

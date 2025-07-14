@@ -105,44 +105,26 @@ def data_cleanse(summary: str) -> str:
     return summary
 
 
-try:
-    # Print the loaded SHAP data for debugging
-    print("Loaded SHAP data:")
-    print(json.dumps(shap_data, indent=2)[:1000])  # Print up to 1000 chars
+# Process each disease in the SHAP data
+final_explanations = {}
 
-    # Process each disease in the SHAP data
-    final_explanations = {}
+for disease, contents in shap_data.items():
+    shap_vals = contents.get("shap_values", {})
+    input_vals = contents.get("input_values", {})
+    probability = contents.get("probability", 0)
 
-    for disease, contents in shap_data.items():
-        shap_vals = contents.get("shap_values", {})
-        input_vals = contents.get("input_values", {})
-        probability = contents.get("probability", 0)
+    prompt_text = build_summary_prompt(disease, shap_vals, input_vals, probability)
+    response = watson.generate(prompt=json.dumps({"prompt": prompt_text}))
+    raw_generated = response["results"][0]["generated_text"]
 
-        print(f"Processing disease: {disease}")
-        prompt_text = build_summary_prompt(disease, shap_vals, input_vals, probability)
-        print(f"Prompt: {prompt_text[:100]}...")
-        response = watson.generate(prompt=json.dumps({"prompt": prompt_text}))
-        print(f"Watson API raw response: {response}")
-        if not response or "results" not in response or not response["results"]:
-            print(f"No results in Watson response for {disease}: {response}")
-            continue
-        raw_generated = response["results"][0].get("generated_text", "")
-        print(f"Raw generated text: {raw_generated}")
+    clean_text = clean_response(raw_generated)
+    cleansed_text = data_cleanse(clean_text)
 
-        clean_text = clean_response(raw_generated)
-        print(f"Cleaned text: {clean_text}")
-        cleansed_text = data_cleanse(clean_text)
-        print(f"Cleansed text: {cleansed_text}")
+    final_explanations[disease] = cleansed_text
+    print(f"Generated summary for {disease}: {cleansed_text[:60]}...")
 
-        final_explanations[disease] = cleansed_text
-        print(f"Generated summary for {disease}: {cleansed_text[:60]}...")
+# Save the cleaned explanations to a JSON file
+with open("shap_outputs/shap_explanation_summary.json", "w") as out_f:
+    json.dump(final_explanations, out_f, indent=2)
 
-    # Save the cleaned explanations to a JSON file
-    with open("shap_outputs/shap_explanation_summary.json", "w") as out_f:
-        json.dump(final_explanations, out_f, indent=2)
-
-    print("\nAll explanations have been saved to 'shap_explanation_summary.json'.")
-except Exception as e:
-    print(f"Error during summary generation: {e}")
-    import traceback
-    traceback.print_exc()
+print("\nAll explanations have been saved to 'shap_explanation_summary.json'.")
