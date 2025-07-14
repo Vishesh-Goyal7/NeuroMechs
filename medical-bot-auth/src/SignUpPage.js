@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
@@ -44,12 +43,26 @@ function SignUpPage() {
   const allRulesMet = passwordRules.every((rule) => rule.test(password));
   const passwordsMatch = password === comparePassword;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
-    if (fullName && email && allRulesMet && passwordsMatch && !emailError) {
-      // Replace with real sign up logic
-      navigate("/landing");
+    if (!fullName || !email || !allRulesMet || !passwordsMatch || emailError) return;
+    try {
+      const response = await fetch("http://localhost:6969/register-doctor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Registration successful!");
+        navigate("/");
+      } else {
+        alert(data.error || "Registration failed");
+      }
+    } catch (err) {
+      console.error("Registration error:", err);
+      alert("Something went wrong.");
     }
   };
 
@@ -60,14 +73,12 @@ function SignUpPage() {
         <img src={logo} alt="Medibot Logo" className="logo-img" />
         <img src={nameImg} alt="Medibot Name" className="name-img" />
       </div>
-
       {/* Hexagons */}
       <div className="hex hex-left"></div>
       <div className="hex hex-right"></div>
       <div className="hex-outline hex-outline-1"></div>
       <div className="hex-outline hex-outline-2"></div>
       <div className="hex-outline hex-outline-3"></div>
-
       <div className="login-container">
         <h1 className="welcome-title">Create Your Account</h1>
         <form className="login-form" onSubmit={handleSubmit} autoComplete="off">
@@ -141,7 +152,7 @@ function SignUpPage() {
         </form>
         <div className="signup-link">
           Already have an account?{" "}
-          <Link to="/" className="underline-link">
+          <Link to="/login-doctor" className="underline-link">
             Login
           </Link>
         </div>
@@ -150,10 +161,4 @@ function SignUpPage() {
   );
 }
 
-=======
-import React from "react";
-function SignUpPage() {
-  return <h2>Sign Up Page (implement as needed)</h2>;
-}
->>>>>>> 32adf93 (initial login)
 export default SignUpPage;

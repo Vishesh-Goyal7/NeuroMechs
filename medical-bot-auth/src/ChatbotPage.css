@@ -1,0 +1,424 @@
+/* Themed and interactive back button */
+.back-btn {
+  padding: 8px 18px;
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.12);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+.back-btn:hover, .back-btn:focus {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+  transform: translateY(-2px) scale(1.04);
+  outline: none;
+}
+.chat-page {
+  height: 100vh; /* Fixed height for chatbot page */
+  overflow-y: hidden; /* Disable vertical scrolling specifically for the chatbot page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
+  padding: 0 16px;
+  gap: 16px;
+}
+
+.chat-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 148px;
+  max-width: 400px; /* center the whole layout */
+  margin: 32px auto; /* center the layout with some margin */
+  width: 100%;
+  padding: 24px;
+}
+
+.chat-column,
+.results-column {
+  flex: 1 1 0;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chat-window, .results {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 12px 48px rgba(16,130,199,0.13), 0 2px 12px rgba(0,0,0,0.04);
+  width: 100%;
+  min-width: 400px;
+  min-height: 320px;
+  max-height: 65vh;
+  padding: 32px 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  align-self: center;
+  justify-content: flex-start;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Chat Bubbles */
+.chat-bubble {
+  max-width: 80%;
+  padding: 16px 18px;
+  border-radius: 18px;
+  font-size: 1.13rem;
+  line-height: 1.6;
+  margin-bottom: 2px;
+  word-break: break-word;
+  box-shadow: 0 1.5px 8px rgba(16,130,199,0.04);
+  transition: background 0.2s;
+  margin-bottom: 12px;
+}
+
+.chat-bubble.bot {
+  background: #f7fbfd;
+  color: #1082c7;
+  align-self: flex-start;
+  border-radius: 18px 18px 18px 4px;
+}
+
+.chat-bubble.user {
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  align-self: flex-end;
+  border-radius: 18px 18px 4px 18px;
+}
+
+/* Input area */
+.chat-input-area {
+  width: 114%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 18px auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-input-area input[type="text"] {
+  flex: 1;
+  padding: 16px 14px;
+  border: 2.5px solid #1082c7;
+  border-radius: 14px;
+  font-size: 1.13rem;
+  background: #f7fbfd;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1.5px 8px rgba(16,130,199,0.04);
+}
+
+.chat-input-area input[type="text"]:focus {
+  border-color: #0e5e8e;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+}
+
+.chat-input-area button {
+  padding: 18px 30px;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  font-size: 1.13rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+  transition: all 0.2s;
+}
+
+.chat-input-area button:hover {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}
+
+.view-results-btn, .download-btn {
+  flex: 1 1 0;
+  max-width: 340px; /* Increased max-width for wider buttons */
+  min-width: 220px; /* Increased min-width for wider buttons */
+  width: 100%;
+  padding: 14px 0;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  font-size: 1.13rem;
+  font-weight: 800;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16,130,199,0.15);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  text-align: center;
+  align-self: center;
+  display: block;
+}
+
+.buttons-row {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 18px;
+}
+
+.buttons-row .view-results-btn,
+.buttons-row .download-btn {
+  flex: 1 1 0;
+  max-width: 340px;
+  min-width: 220px;
+  width: 100%;
+  margin: 0 9px;
+  box-sizing: border-box;
+  white-space: nowrap; /* ensures one-line text */
+}
+
+.view-results-btn:not(.buttons-row .view-results-btn),
+.download-btn:not(.buttons-row .download-btn) {
+  margin: 22px auto 0 auto;
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  min-width: 180px;
+}
+
+.download-form-btn {
+  display: inline-block;
+  padding: 14px 0; /* Adjusted padding to match view-results-btn */
+  font-size: 1.13rem; /* Adjusted font size to match view-results-btn */
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(90deg, #4fd1c5, #1082c7);
+  border: none;
+  border-radius: 16px; /* Adjusted border-radius to match view-results-btn */
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(16,130,199,0.09);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  align-self: center;
+}
+
+.download-form-btn:hover {
+  background: linear-gradient(90deg, #1082c7, #4fd1c5);
+  box-shadow: 0 4px 12px rgba(16, 130, 199, 0.3);
+}
+
+.download-form-btn:disabled {
+  background: #b0d4e3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1000px) {
+  .chat-page {
+    overflow-y: auto; /* Enable vertical scrolling for smaller screens */
+  }
+}
+
+@media (min-width: 1001px) {
+  .chat-page {
+    overflow-y: hidden; /* Disable vertical scrolling for larger screens */
+  }
+}
+
+@media (max-width: 1000px) {
+  .chat-layout {
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px 20px;
+    align-items: center; /* ensure center on mobile too */
+  }
+
+  .chat-column, .results-column {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .chat-window, .results {
+    max-width: 100%;
+    max-height: 60vh;
+  }
+
+  .view-results-btn, .download-btn {
+    width: 80%;
+  }
+}
+
+
+.view-results-btn:hover,
+.download-btn:hover {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}
+
+.view-results-btn:only-child {
+  display: block;
+  margin: 18px auto 0 auto;
+  width: 100%;
+  max-width: 340px;
+  min-width: 220px;
+  white-space: nowrap;
+}
+
+/* Results box content */
+.results h3 {
+  color: #1082c7;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.results ul {
+  padding-left: 18px;
+  color: #222;
+  font-size: 1.08rem;
+}
+
+.results-column .download-btn {
+  margin: 0 auto 0 calc(31% + 10px) !important;
+  display: block !important;
+}
+
+/* Rotating dots loading animation */
+.loading-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 8px;
+}
+
+.loading-dots .dot {
+  width: 6px;
+  height: 6px;
+  background-color: currentColor;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: dotRotate 1.4s infinite ease-in-out;
+}
+
+.loading-dots .dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading-dots .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotRotate {
+  0%, 40%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Logout button styling to match the theme */
+.logout-btn {
+  outline: none;
+}
+
+/* Navigation link styling to match the theme */
+.nav-link {
+  color: #1082c7;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  color: #1082c7;
+}
+
+/* Global button styling for consistency */
+.btn-primary {
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16,130,199,0.12);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 16px rgba(16,130,199,0.18);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #1082c7;
+  border: 2px solid #1082c7;
+  border-radius: 12px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(16,130,199,0.15);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.view-results-btn, .download-btn, .download-form-btn {
+  flex: 1 1 0;
+  max-width: 340px;
+  min-width: 275px;
+  width: 100%;
+  padding: 19px 0;
+  font-size: 1.13rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(90deg, #4fd1c5 0%, #1082c7 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16,130,199,0.15);
+  text-align: center;
+  align-self: center;
+  display: block;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.view-results-btn:hover, .download-btn:hover, .download-form-btn:hover {
+  background: linear-gradient(90deg, #1082c7 0%, #4fd1c5 100%);
+  color: #222;
+  box-shadow: 0 4px 24px rgba(16,130,199,0.18);
+}

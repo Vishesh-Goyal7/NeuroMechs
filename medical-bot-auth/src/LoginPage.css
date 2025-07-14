@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-body, html, #root {
+/* Styles specific to login page only */
+.login-page body, .login-page html, .login-page #root {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -39,7 +39,6 @@ body, html, #root {
   display: block;
   margin-left: 10px;
 }
-
 
 .hex-left {
   left: -100px;
@@ -208,137 +207,3 @@ border-radius: 12px;
   font-weight: 700;
   margin-left: 4px;
 }
-=======
-body {
-    margin: 0;
-    font-family: 'Nunito', Arial, sans-serif;
-  }
-  
-  .login-bg {
-    background: #d6effc;
-    min-height: 100vh;
-    position: relative;
-  }
-  
-  .hex {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    background: #1082c7;
-    clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
-    z-index: 1;
-  }
-  
-  .hex-left {
-    left: 2vw;
-    bottom: 10vh;
-  }
-  
-  .hex-right {
-    right: 2vw;
-    top: 20vh;
-  }
-  
-  .login-container {
-    position: relative;
-    z-index: 2;
-    max-width: 400px;
-    margin: 80px auto 0 auto;
-    background: transparent;
-    padding: 40px 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .logo-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    margin-left: -180px;
-  }
-  
-  .logo-img {
-    width: 40px;
-    margin-right: 10px;
-  }
-  
-  .logo-text {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #222;
-    letter-spacing: 1px;
-  }
-  
-  .welcome-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 32px;
-    color: #222;
-    text-align: center;
-  }
-  
-  .login-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .login-input {
-    width: 100%;
-    max-width: 350px;
-    padding: 16px;
-    margin-bottom: 18px;
-    border: 2px solid #1082c7;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    background: #fff;
-    outline: none;
-    transition: border 0.2s;
-  }
-  
-  .login-input:focus {
-    border: 2px solid #0e5e8e;
-  }
-  
-  .forgot-text {
-    color: #6c7a89;
-    font-size: 1rem;
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  
-  .login-btn {
-    width: 100%;
-    max-width: 350px;
-    padding: 16px;
-    background: #b6d6e7;
-    color: #222;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    margin-bottom: 18px;
-    transition: background 0.2s;
-  }
-  
-  .login-btn:hover {
-    background: #1082c7;
-    color: #fff;
-  }
-  
-  .signup-link {
-    color: #6c7a89;
-    font-size: 1.1rem;
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .underline-link {
-    color: #1082c7;
-    text-decoration: underline;
-    cursor: pointer;
-  }
->>>>>>> 32adf93 (initial login)

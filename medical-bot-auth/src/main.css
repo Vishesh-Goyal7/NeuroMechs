@@ -1,0 +1,131 @@
+/* Full-page container */
+.main-landing-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: #d6effc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  padding: 0 20px;
+  font-family: 'Nunito', Arial, sans-serif;
+}
+
+/* Title text */
+.main-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #003f5c;
+  text-align: center;
+  margin-bottom: 40px;
+  z-index: 2;
+  letter-spacing: 0.8px;
+}
+
+.brand {
+  color: #1082c7;
+}
+
+/* Button group styling */
+.main-btn-group {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Base button style */
+.main-btn {
+  padding: 18px 36px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, color 0.2s;
+  box-shadow: 0 4px 16px rgba(16, 130, 199, 0.15);
+}
+
+/* Doctor and Patient button variations */
+.main-btn.doctor {
+  background: linear-gradient(to right, #4fd1c5, #1082c7);
+  color: white;
+}
+
+.main-btn.patient {
+  background: white;
+  color: #1082c7;
+  border: 2px solid #1082c7;
+}
+
+.main-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* Logo and name at the top */
+.main-logo-bar {
+  position: absolute;
+  top: 36px;
+  left: 48px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.main-logo-img {
+  width: 48px;
+  height: 48px;
+  margin-right: 18px;
+}
+
+.main-name-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+/* More rounded, floating hexagons */
+.shape {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  background: #1082c7;
+  clip-path: polygon(25% 8%, 75% 8%, 100% 50%, 75% 92%, 25% 92%, 0% 50%);
+  border-radius: 48px;
+  opacity: 0.7;
+  z-index: 1;
+  box-shadow: 0 16px 64px #1082c71a;
+  animation: floatHex 4s ease-in-out infinite alternate;
+}
+
+.shape1 {
+  right: -70px;
+  bottom: 70px;
+  background: linear-gradient(135deg, #4fd1c5 60%, #1082c7 100%);
+  animation-delay: 0s;
+}
+
+.shape2 {
+  left: 380px;
+  top: -220px;
+  background: linear-gradient(135deg,#4fd1c5 60%, #1082c7 100%);
+  opacity: 0.6;
+  animation-delay: 1.2s;
+}
+
+.shape3 {
+  left: -180px;
+  bottom: -120px;
+  background: linear-gradient(135deg, #4fd1c5 60%, #1082c7 100%);
+  opacity: 0.4;
+  border: 3px solid #1082c7;
+  animation-delay: 2.2s;
+}
+
+@keyframes floatHex {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-32px) scale(1.04); }
+}

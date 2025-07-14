@@ -1,0 +1,94 @@
+.records-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d6effc 60%, #b6e0fe 100%);
+  padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.records-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 32px;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.records-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1082c7;
+  margin: 0;
+}
+
+.download-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1082c7;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.download-btn:hover {
+  color: #4fd1c5;
+}
+
+.records-loading {
+  color: #1082c7;
+  font-size: 1.2rem;
+  margin: 32px 0;
+}
+
+.records-error {
+  color: #e53e3e;
+  background: #fff0f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.records-list {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.record-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(16, 130, 199, 0.13),
+              0 1.5px 8px rgba(0, 0, 0, 0.04);
+  padding: 32px 28px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.record-info {
+  font-size: 1.08rem;
+  color: #1082c7;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .records-header-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

@@ -15,10 +15,10 @@ function AboutPage() {
           <img src={nameImg} alt="VITA.AI" className="name-img" />
         </div>
         <nav className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About</Link>
-          <Link to="/services" className="nav-link">Services</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
+          <Link to="/landing" className="nav-link nav-btn">Home</Link>
+          <Link to="/about" className="nav-link nav-btn">About</Link>
+          <Link to="/records" className="nav-link nav-btn">Records</Link>
+          <Link to="/contact" className="nav-link nav-btn">Contact</Link>
         </nav>
       </header>
 
