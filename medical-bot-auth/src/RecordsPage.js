@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FiDownload } from "react-icons/fi"; // Download icon
+import { FiDownload } from "react-icons/fi";
 import "./RecordsPage.css";
 
 function RecordsPage() {

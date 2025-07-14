@@ -174,27 +174,21 @@ app.post('/chat', authMiddleware, (req, res) => {
 });
 
 app.post('/process', authMiddleware, async (req, res) => {
-  exec("..\\.venv\\Scripts\\python.exe nlp_input_convert.py", { cwd: __dirname }, (err1, stdout1, stderr1) => {
-    if (err1) {
-      console.error("NLP step failed:", stderr1);
-      return res.status(500).json({ error: "NLP step failed", details: err1.message, stderr: stderr1 });
-    }
+  exec("../venv/bin/python3.10 nlp_input_convert.py", (err1) => {
+    if (err1) return res.status(500).json({ error: "NLP step failed", details: err1.message });
     console.log("nlp_input_convert.py finished");
 
-    exec("..\\.venv\\Scripts\\python.exe T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
+    exec("../venv/bin/python3.10 T2S6EI.py", { cwd: __dirname }, (err2, stdout, stderr) => {
       console.log("T2S6EI.py finished");
       if (err2) {
-        console.error("Prediction step failed:", stderr);
+        console.error(stderr);
         return res.status(500).json({ error: "Prediction step failed", details: err2.message, stderr });
       }
       console.log(stdout);
 
-      exec("..\\.venv\\Scripts\\python.exe watsonGroupSummary.py", { cwd: __dirname }, (err3, stdout3, stderr3) => {
+      exec("../venv/bin/python3.10 watsonGroupSummary.py", (err3, stdout3, stderr3) => {
         console.log("Watson group summary.py finished");
-        if (err3) {
-          console.error("Summary generation failed:", stderr3);
-          return res.status(500).json({ error: "Summary generation failed", details: err3.message, stderr: stderr3 });
-        }
+        if (err3) return res.status(500).json({ error: "Summary generation failed", details: err3.message });
         console.log(5678);
 
         const summaryPath = path.join(__dirname, "shap_outputs", "shap_explanation_summary.json");
@@ -208,6 +202,7 @@ app.post('/process', authMiddleware, async (req, res) => {
     });
   });
 });
+
 
 app.post('/api/download', authMiddleware, async (req, res) => {
   try {

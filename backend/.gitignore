@@ -3,3 +3,4 @@ node_modules/
 disease_model_model.json
 filtered_dataset_min15.csv
 /__pycache__/
+.env
