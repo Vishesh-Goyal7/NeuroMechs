@@ -34,7 +34,7 @@ function AboutPatient() {
             This wasn't just frustrating — it was dangerous. Doctors <span className="bold">hesitating to use AI</span> not because it wasn't smart, but because it couldn’t <span className="bold">explain itself</span>. And in healthcare, trust is <span className="italic">everything</span>.
           </p>
           <div className="about-sidekick">
-            <span className="sidekick-title">So we built <a href="http://Vita.AI" target="_blank" rel="noopener noreferrer" className="highlight-link">Vita.AI</a> — The Honest AI Sidekick</span>
+            <span className="sidekick-title">So we built <a href="https://vitaai.neuromechs.in" target="_blank" rel="noopener noreferrer" className="highlight-link">Vita.AI</a> — The Honest AI Sidekick</span>
             <p>
               We wanted to create an AI system that doesn’t just throw medical guesses at doctors — it <span className="bold">talks</span> to them, <span className="bold">walks</span> them through its logic, and even shows <span className="bold">how confident</span> it is.
             </p>
@@ -44,10 +44,9 @@ function AboutPatient() {
         <section className="about-what">
           <h3>What does it do?</h3>
           <ul className="about-list">
-            <li>✅ You (the doctor or user) list your symptoms</li>
-            <li>✅ It asks for how bad each symptom feels</li>
-            <li>✅ It gives back <span className="bold">diagnostic suggestions</span> — <span className="italic">with reasoning, scores, and plain-English explanations</span></li>
-            <li>✅ You understand the <span className="italic">why</span>, not just the <span className="italic">what</span></li>
+            <li>✅ The doctor lists out your symptoms</li>
+            <li>✅ It gives back <span className="bold"> diagnostic suggestions</span> — <span className="italic">with reasoning, scores, and plain-English explanations</span></li>
+            <li>✅ You understand the <span className="italic"> why</span>, not just the <span className="italic"> what</span></li>
           </ul>
           <div className="about-transparency">
             <span>No black boxes. No mystery medicine. Just <span className="bold">transparency</span> with a touch of tech magic.</span>
