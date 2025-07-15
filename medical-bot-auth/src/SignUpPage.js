@@ -48,7 +48,7 @@ function SignUpPage() {
     setTouched(true);
     if (!fullName || !email || !allRulesMet || !passwordsMatch || emailError) return;
     try {
-      const response = await fetch("http://localhost:6969/register-doctor", {
+      const response = await fetch("https://vitaaiapi.neuromechs.in/register-doctor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: email, password }),

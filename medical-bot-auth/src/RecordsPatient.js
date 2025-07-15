@@ -15,7 +15,7 @@ function RecordsPage() {
         const token = localStorage.getItem("token");
 
         const response = await axios.post(
-          'http://localhost:6969/api/records-patient',
+          'https://vitaaiapi.neuromechs.in/api/records-patient',
           { email: patientEmail },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -35,7 +35,7 @@ function RecordsPage() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        `http://localhost:6969/api/records/${recordId}/pdf`,
+        `https://vitaaiapi.neuromechs.in/api/records/${recordId}/pdf`,
         {
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob", // Ensure the response is treated as a binary file

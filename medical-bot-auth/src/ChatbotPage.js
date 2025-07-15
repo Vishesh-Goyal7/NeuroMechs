@@ -28,7 +28,7 @@ function ChatbotPage() {
       return;
     }
     try {
-      await axios.post("http://localhost:6969/chat", {
+      await axios.post("https://vitaaiapi.neuromechs.in/chat", {
         symptom: trimmed,
         score: 1.0  
       }, {headers: {
@@ -47,10 +47,11 @@ function ChatbotPage() {
     setResults(null);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:6969/process", {}, {headers: {
+      const response = await axios.post("https://vitaaiapi.neuromechs.in/process", {}, {headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         }});
+        console.log(response.data.summary);
       setResults(response.data.summary);
     } catch (err) {
       setChat(prev => [...prev, { sender: "bot", text: "❌ Failed to fetch results." }]);

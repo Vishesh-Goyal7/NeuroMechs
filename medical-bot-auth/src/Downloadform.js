@@ -40,7 +40,7 @@ function Downloadform() {
     try {
       const token = localStorage.getItem("token");
       const doctorEmail = localStorage.getItem("username");
-      const res = await fetch('http://localhost:6969/api/download', {
+      const res = await fetch('https://vitaaiapi.neuromechs.in/api/download', {
         method: 'POST',
         headers: {
           "Authorization": `Bearer ${token}`,

@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import logo from "./neuro.png";
-import nameImg from "./name.png"; const passwordRules = [
+import nameImg from "./name.png"; 
+import axios from "axios";
+
+const passwordRules = [
   { label: "At least 8 characters", test: (pw) => pw.length >= 8 },
   { label: "One uppercase letter", test: (pw) => /[A-Z]/.test(pw) },
   { label: "One lowercase letter", test: (pw) => /[a-z]/.test(pw) },
@@ -45,6 +48,7 @@ function SignUpPage() {
     setTouched(true);
     if (!email || !allRulesMet || !passwordsMatch || emailError) return;
     try {
+      const response = await axios.post('https://vitaaiapi.neuromechs.in/register-patient', {username : email, password : password})
       alert("Registration successful!");
       navigate("/");
     } catch (err) {

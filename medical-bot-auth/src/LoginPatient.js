@@ -17,7 +17,7 @@ function LoginPage() {
       return;
     }
     try {
-      const user = await axios.post('http://localhost:6969/login-patient', {username : email, password});
+      const user = await axios.post('https://vitaaiapi.neuromechs.in/login-patient', {username : email, password});
       localStorage.setItem("username", user.data.username);
       localStorage.setItem("token", user.data.token);
       navigate('/landing-patient')

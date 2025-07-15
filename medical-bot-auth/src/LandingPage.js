@@ -21,7 +21,7 @@ function LandingPage() {
   const sessionStart = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:6969/session/start", {},{
+      await axios.post("https://vitaaiapi.neuromechs.in/session/start", {},{
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"

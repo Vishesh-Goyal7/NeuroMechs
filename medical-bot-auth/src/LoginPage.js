@@ -17,7 +17,7 @@ function LoginPage() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:6969/login-doctor", {
+      const response = await axios.post("https://vitaaiapi.neuromechs.in/login-doctor", {
         username : email,
         password
       });
