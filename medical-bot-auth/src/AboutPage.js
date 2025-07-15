@@ -43,11 +43,11 @@ function AboutPage() {
           <h3>What does it do?</h3>
           <ul className="about-list">
             <li>✅ You (the doctor) lists the patients' symptoms.</li>
-            <li>✅ It gives back <span className="bold"> diagnostic suggestions</span> — <span className="italic">with reasoning, scores, and plain-English explanations.</span></li>
-            <li>✅ You understand the <span className="italic"> why</span>, not just the <span className="italic"> what</span></li>
+            <li>✅ It gives back <strong>diagnostic suggestions</strong> — <i>with reasoning, scores, and plain-English explanations.</i></li>
+            <li>✅ You understand the <i> why</i>, not just the <i>what</i></li>
           </ul>
           <div className="about-transparency">
-            <span>No black boxes. No mystery medicine. Just <span className="bold">transparency</span> with a touch of tech magic.</span>
+            <span>No black boxes. No mystery medicine. Just <strong>transparency</strong> with a touch of tech magic.</span>
           </div>
         </section>
 
