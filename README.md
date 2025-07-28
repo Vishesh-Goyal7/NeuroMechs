@@ -50,7 +50,7 @@ VitaAI is an AI Assisted medical assistant intended for the use of doctors. It h
 
 ## 🧠 Backend Walkthrough
 - **Symptom Selection :** Dynamically enter the patient's symptoms from the frontend in form of an interactive chatbot.
-- **Career Picker :** DNN models specific to each cluster finds most suitable jobs from each cluster. 
+- **Disease Picker :** XGBoost model to find most possible disease from patient's input symptoms. 
 - **SHAP Explainer :** A SHAP model derives the list of all the factors that contributed positively/negatively to prediction.
 - **IBM WatsonX API :** Reads the SHAP generated explanations and creates a detailed human readable report about why career was chosen.
 
